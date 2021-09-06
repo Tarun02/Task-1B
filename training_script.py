@@ -5,6 +5,7 @@ import pickle
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
+import os
 
 def reading_data():
     initial_train_data = pd.read_json("data/dataset_en_train.json", lines=True)
@@ -15,8 +16,8 @@ def preprocess_data(data):
     data = data[['review_body','stars']]
     
     # Remove the product_category as it is the target item.
-    X = data.drop(['product_category'], axis=1)
-    y = data['product_category']
+    X = data.drop(['stars'], axis=1)
+    y = data['stars']
     
     return X,y
     
@@ -44,4 +45,5 @@ def main():
     saving_model(final_model, features)
 
 if __name__ == "__main__":
+    os.mkdir("output")
     main()
